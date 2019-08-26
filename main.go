@@ -27,7 +27,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	req.Header.Set("User-Agent", "spacecount-tutorial")
+	req.Header.Set("User-Agent", "reddit-api")
 
 	res, getErr := redditClient.Do(req)
 	if getErr != nil {
