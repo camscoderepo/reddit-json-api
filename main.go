@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 type title struct {
@@ -12,14 +15,36 @@ type title struct {
 
 
 func main() {
-	resp, err := http.Get("https://www.reddit.com/r/AskReddit/")
-	if err != nil {
-		log.Fatalln(err)
+
+	url := "https://www.reddit.com/r/AskReddit/.json"
+
+	redditClient := http.Client{
+		Timeout: time.Second * 2, // Maximum of 2 secs
 	}
-	defer resp.Body.Close()
-	body, err := ioutil.ReadAll(resp.Body)
+
+	req, err := http.NewRequest(http.MethodGet, url, nil)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
 	}
-	log.Println(string(body))
+
+	req.Header.Set("User-Agent", "spacecount-tutorial")
+
+	res, getErr := redditClient.Do(req)
+	if getErr != nil {
+		log.Fatal(getErr)
+	}
+
+	body, readErr := ioutil.ReadAll(res.Body)
+	if readErr != nil {
+		log.Fatal(readErr)
+	}
+
+	title1 := title{}
+	jsonErr := json.Unmarshal(body, &title1)
+	if jsonErr != nil {
+		log.Fatal(jsonErr)
+	}
+
+	fmt.Println(title1)
+
 }
