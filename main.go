@@ -35,7 +35,7 @@ func main() {
 		log.Fatal(readErr)
 	}
 
-	type Listing struct {
+	type List struct {
 		Data struct {
 			Children []struct {
 				Data struct {
@@ -45,13 +45,13 @@ func main() {
 		}
 	}
 	
-	var listing Listing
-	jsonErr := json.Unmarshal(body, &listing)
+	var list List
+	jsonErr := json.Unmarshal(body, &list)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
 
-	fmt.Println(listing)
+	fmt.Println(list)
 
 }
 
