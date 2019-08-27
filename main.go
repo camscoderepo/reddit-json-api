@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-
 func main() {
 
 	
@@ -36,7 +35,7 @@ func main() {
 		log.Fatal(readErr)
 	}
 
-	type Foo struct {
+	type Listing struct {
 		Data struct {
 			Children []struct {
 				Data struct {
@@ -46,13 +45,13 @@ func main() {
 		}
 	}
 	
-	var foo Foo
-	jsonErr := json.Unmarshal(body, &foo)
+	var listing Listing
+	jsonErr := json.Unmarshal(body, &listing)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
 
-	fmt.Println(foo)
+	fmt.Println(listing)
 
 }
 
