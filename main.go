@@ -4,18 +4,34 @@ import (
 	"fmt"
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
+	"log"
 	"time"
 )
 
-type title struct {
-	Title string `json:"title"`
+type RedditRoot struct {
+    Kind string     `json:"kind"`
+    Data RedditData `json:"data"`
 }
+
+type RedditData struct {
+    Children []RedditDataChild `json:"children"`
+}
+
+type RedditDataChild struct {
+    Kind string `json:"kind"`
+    Data *Post  `json:"data"`
+}
+
+type Post struct {
+	Title		 string `json:"data"`
+}
+
 
 
 func main() {
 
+	
 	url := "https://www.reddit.com/r/AskReddit/.json"
 
 	redditClient := http.Client{
@@ -39,12 +55,23 @@ func main() {
 		log.Fatal(readErr)
 	}
 
-	title1 := title{}
-	jsonErr := json.Unmarshal(body, &title1)
+	type Foo struct {
+		Data struct {
+			Children []struct {
+				Data struct {
+					Title string
+				}
+			}
+		}
+	}
+	
+	var foo Foo
+	jsonErr := json.Unmarshal(body, &foo)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
 	}
 
-	fmt.Println(title1)
+	fmt.Println(foo)
 
 }
+
