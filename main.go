@@ -9,25 +9,6 @@ import (
 	"time"
 )
 
-type RedditRoot struct {
-    Kind string     `json:"kind"`
-    Data RedditData `json:"data"`
-}
-
-type RedditData struct {
-    Children []RedditDataChild `json:"children"`
-}
-
-type RedditDataChild struct {
-    Kind string `json:"kind"`
-    Data *Post  `json:"data"`
-}
-
-type Post struct {
-	Title		 string `json:"data"`
-}
-
-
 
 func main() {
 
