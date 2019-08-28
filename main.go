@@ -13,7 +13,7 @@ type List struct {
 	Data struct {
 		Children []struct {
 			Data struct {
-				Title string
+				Title string `json:"title"`
 			}
 		}
 	}
