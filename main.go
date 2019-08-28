@@ -9,10 +9,20 @@ import (
 	"time"
 )
 
+type List struct {
+	Data struct {
+		Children []struct {
+			Data struct {
+				Title string
+			}
+		}
+	}
+}
+
 func main() {
 
 	
-	url := "https://www.reddit.com/r/AskReddit/.json"
+	url := "https://reddit.com/r/AskReddit.json"
 
 	redditClient := http.Client{
 		Timeout: time.Second * 2, // Maximum of 2 secs
@@ -35,17 +45,9 @@ func main() {
 		log.Fatal(readErr)
 	}
 
-	type List struct {
-		Data struct {
-			Children []struct {
-				Data struct {
-					Title string
-				}
-			}
-		}
-	}
 	
-	var list List
+	
+	list := &List{}
 	jsonErr := json.Unmarshal(body, &list)
 	if jsonErr != nil {
 		log.Fatal(jsonErr)
